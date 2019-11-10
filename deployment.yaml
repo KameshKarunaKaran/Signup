@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: signup-server
+  labels:
+    app: signup-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: signup-server
+  template:
+    metadata:
+      labels:
+        app: signup-server
+    spec:
+      containers:
+      - name: signup-server
+        image: ashwinc44/signup:v1.2
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: signup-service
+  labels:
+     app: signup-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: signup-server
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: signup-hpa
+  namespace: default
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: signup-server
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 50
