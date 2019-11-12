@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: signup-server
-        image: kamesh9810/signup:v1.latest
+        image: kamesh9810/signup:latest
         ports:
         - containerPort: 8080
 ---
