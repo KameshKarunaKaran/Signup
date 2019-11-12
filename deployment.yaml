@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: signup-server
-        image: ashwinc44/signup:v1.2
+        image: kamesh9810/signup:v1.2
         ports:
         - containerPort: 8080
 ---
